@@ -5,4 +5,7 @@ for image in $(cat images.list) ; do
   dir="$(echo "$image" | sed 's|:|/|')"
   mkdir -p "$dir"
   sed "s|%%BASE_IMAGE%%|$image|" Dockerfile-template > "$dir/Dockerfile"
+  if [[ "$image" == "circleci"* ]] ; then
+    sed -i 's|chmod|sudo chmod|' "$dir/Dockerfile"
+  fi
 done
