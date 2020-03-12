@@ -1,0 +1,8 @@
+#!/bin/bash
+
+for image in $(cat images.list) ; do
+  echo "$image -> $dir"
+  dir="$(echo "$image" | sed 's|:|/|')"
+  mkdir -p "$dir"
+  sed "s|%%BASE_IMAGE%%|$image|" Dockerfile-template > "$dir/Dockerfile"
+done
